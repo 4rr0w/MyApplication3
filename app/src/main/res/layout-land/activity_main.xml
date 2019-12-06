@@ -77,7 +77,7 @@
             android:layout_width="120dp"
             android:layout_height="35dp"
             android:layout_marginTop="16dp"
-            android:background="@layout/rounded_button_settings"
+            android:background="@drawable/button"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/login"
             android:textSize="18sp"
@@ -99,6 +99,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Login" />
+        <TextView
+            android:id="@+id/iferror"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/Userid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Logo"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/signuptext"
+            android:layout_width="256dp"
+            android:layout_height="35dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="@string/signuphere"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/google_button"
+            app:layout_constraintVertical_bias="0.058" />
+
+        <ImageView
+            android:id="@+id/Signup"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signuptext"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/signu_ico" />
 
         <!--<com.facebook.login.widget.LoginButton
             android:id="@+id/fb_button"

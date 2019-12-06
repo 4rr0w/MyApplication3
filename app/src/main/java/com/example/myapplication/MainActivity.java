@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private TextView error;
     private Button login;
+    private ImageView signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.Password);
         error = (TextView) findViewById(R.id.iferror);
         login = (Button)findViewById(R.id.Login);
+        signup = (ImageView)findViewById(R.id.Signup);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +40,14 @@ public class MainActivity extends AppCompatActivity {
                 validate(username.getText().toString(),password.getText().toString());
             }
         });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(MainActivity.this,SignUp.class);
+                startActivity(intent);
 
+            }
+        });
         //firebase after this line
         //mAuth = FirebaseAuth.getInstance();
 
@@ -47,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private void validate( String userName , String Password){
         if ((userName.equals("Admin")&& (Password.equals("login")))){
             Intent intent =  new Intent(MainActivity.this,Loggedin.class);
+            error.setText("");
             startActivity(intent);
 
         }
@@ -56,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     }
 

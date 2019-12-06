@@ -5,5 +5,5 @@
     <stroke android:width="5px" android:color="#31a1fc" />
     <gradient android:startColor="#ffffff"
         android:endColor="#ffffff"
-        android:angle="135" />
+        android:angle="135" android:padding="8dp"/>
 </shape>
