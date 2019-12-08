@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,11 +40,18 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
+                                email.setText("");
+                                password.setText("");
+                                user.setText("");
                                 Toast.makeText(SignUp.this, "Registration Successful!!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(SignUp.this, MainActivity.class);
+                                finish();
                                 startActivity(intent);
                             }
                             else{
+                                email.setText("");
+                                password.setText("");
+                                user.setText("");
                                 Toast.makeText(SignUp.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
