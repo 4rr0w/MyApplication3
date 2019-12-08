@@ -26,22 +26,18 @@
 
 
         <EditText
+
             android:id="@+id/Userid"
             android:layout_width="235dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:background="@layout/text_field"
             android:ems="10"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/open_sans"
             android:hint="@string/username"
             android:inputType="textPersonName"
             android:padding="8dp"
-            android:shadowColor="#000000"
-            android:shadowDx="1.2"
-            android:shadowDy="1.2"
-            android:shadowRadius="1.5"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-
             android:textColor="#000000"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,17 +51,13 @@
             android:layout_marginTop="8dp"
             android:background="@layout/text_field"
             android:ems="10"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/open_sans"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:shadowColor="#000000"
-            android:shadowDx="1.2"
-            android:shadowDy="1.2"
-            android:shadowRadius="1.5"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,10 +107,10 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/signuptext"
+            android:id="@+id/signup"
             android:layout_width="256dp"
             android:layout_height="35dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:text="@string/signuphere"
             android:textColor="@color/cardview_light_background"
@@ -129,17 +121,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/google_button"
             app:layout_constraintVertical_bias="0.058" />
-
-        <ImageView
-            android:id="@+id/Signup"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signuptext"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/signu_ico" />
 
         <!-- <com.facebook.login.widget.LoginButton
             android:id="@+id/fb_button"
