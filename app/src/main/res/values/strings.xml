@@ -22,7 +22,7 @@
     <string name="play_services_error_fmt">Google Play Services Error: %i</string>
 
     <!--texts for login form-->
-    <string name="username">Username or Email</string>
+    <string name="username">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="signuphere">New User? Sign Up here</string>

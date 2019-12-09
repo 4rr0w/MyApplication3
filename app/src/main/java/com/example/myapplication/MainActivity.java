@@ -59,15 +59,10 @@ public class MainActivity extends AppCompatActivity {
     //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
 
-    //Tag for the logs optional
-    private static final String TAG = "";
+
 
     //creating a GoogleSignInClient object
     GoogleSignInClient mGoogleSignInClient;
-
-    //And also a Firebase Auth object
-    FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         progress = new ProgressDialog(this);//progression bar
         FirebaseUser user = firebaseLogin.getCurrentUser();//checks if user is already logged in
-
-        if(user != null){//if user already is logged in then skip to LoggedIn.class
-            finish();
-            startActivity(new Intent(MainActivity.this,Loggedin.class));
-        }
-
-
 
 
         login.setOnClickListener(new View.OnClickListener() {//when user clicks on login button
@@ -117,14 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //google botton sign after this
+        //google button sign after this
 
 
 
 
 
             //first we intialized the FirebaseAuth object
-            mAuth = FirebaseAuth.getInstance();
+            firebaseLogin = FirebaseAuth.getInstance();
 
             //Then we need a GoogleSignInOptions object
             //And we need to build it as below
@@ -154,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             //if the user is already signed in
             //we will close this activity
             //and take the user to profile activity
-            if (mAuth.getCurrentUser() != null) {
+            if (firebaseLogin.getCurrentUser() != null) {
                 finish();
                 startActivity(new Intent(this, Loggedin.class));
             }
@@ -183,19 +171,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-            Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
 
             //getting the auth credential
             AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
             //Now using firebase we are signing in the user here
-            mAuth.signInWithCredential(credential)
+            firebaseLogin.signInWithCredential(credential)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Log.d(TAG, "signInWithCredential:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                FirebaseUser user = firebaseLogin.getCurrentUser();
                                 finish();
                                 startActivity(new Intent(MainActivity.this, Loggedin.class));
 
@@ -203,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+
                                 Toast.makeText(MainActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
 
@@ -232,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
     private void validate( String userName , String Password){//this function validate user with faribase databaese
         progress.setMessage("Authenticating");
         progress.show();
-       firebaseLogin.createUserWithEmailAndPassword(userName,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+       firebaseLogin.signInWithEmailAndPassword(userName,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
            @Override
            public void onComplete(@NonNull Task<AuthResult> task) {
                if(task.isSuccessful()){
@@ -242,8 +230,9 @@ public class MainActivity extends AppCompatActivity {
                }
                else{
                    progress.dismiss();
-                   Toast.makeText(MainActivity.this, "Login Failed!!", Toast.LENGTH_SHORT).show();
                    error.setText("Wrong Username or Password!");
+                   Toast.makeText(MainActivity.this, "Login Failed!!", Toast.LENGTH_SHORT).show();
+
                }
 
            }

@@ -23,7 +23,7 @@ public class Loggedin extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseAuth.signOut();
+                firebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(Loggedin.this,MainActivity.class);
                 finish();
                 startActivity(intent);
