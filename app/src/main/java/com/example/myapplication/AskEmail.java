@@ -25,7 +25,7 @@ public class AskEmail extends AppCompatActivity {
             @Override
             public void onClick(View v) {//when back button is clicked it sets all fields to emoty and finish this activity and opens previous activity AskDOb
                 email.setText("");//setting email field to empty.
-                finish();//deleting this activity
+                AskEmail.this.finish();//deleting this activity
                 Intent intent = new Intent(AskEmail.this,AskDOB.class);
                 startActivity(intent);
             }
@@ -35,7 +35,7 @@ public class AskEmail extends AppCompatActivity {
                                                               //which can be acessed by another activity outside this also we don't finish this activity as we will nedd this data while registering
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AskEmail.this,AskPhone.class);//creating a new intent pointing to AskPhone
+                Intent intent = new Intent(AskEmail.this,OTP.class);//creating a new intent pointing to AskPhone
                 startActivity(intent);//starting this new intent
             }
         });

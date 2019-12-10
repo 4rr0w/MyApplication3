@@ -29,7 +29,7 @@ public class AskDOB extends AppCompatActivity {
                 day.setText("");//setting fields to empty
                 month.setText("");
                 year.setText("");
-                finish();
+                AskDOB.this.finish();
                 Intent intent = new Intent(AskDOB.this,Askname.class);
                 startActivity(intent);
             }
