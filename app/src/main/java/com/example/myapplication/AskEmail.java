@@ -25,7 +25,7 @@ public class AskEmail extends AppCompatActivity {
             @Override
             public void onClick(View v) {//when back button is clicked it sets all fields to emoty and finish this activity and opens previous activity AskDOb
                 email.setText("");//setting email field to empty.
-               // finish();//deleting this activity
+                finish();//deleting this activity
                 Intent intent = new Intent(AskEmail.this,AskDOB.class);
                 startActivity(intent);
             }

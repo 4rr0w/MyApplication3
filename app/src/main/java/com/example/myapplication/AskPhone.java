@@ -28,7 +28,7 @@ public class AskPhone extends AppCompatActivity {
             @Override
             public void onClick(View v) {//when back button is clicked it sets all fields to emoty and finish this activity and opens previous activity
                 phone.setText("");//setting phone field to empty.
-               // finish();//deleting this activity
+                finish();//deleting this activity
                 Intent intent = new Intent(AskPhone.this,AskEmail.class);
                 startActivity(intent);
             }
