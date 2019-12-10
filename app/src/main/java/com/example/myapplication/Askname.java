@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Askname extends AppCompatActivity {
-    public static EditText firstName;
-    public static EditText lastName;
+    public static EditText firstName,lastName;//public static variables to acess these variables at in other activities. this makes our job easy but don't know is this secure?
     private Button toDOB;
 
     @Override
@@ -23,12 +22,13 @@ public class Askname extends AppCompatActivity {
 
         toDOB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Askname.this,AskDOB.class);
-                startActivity(intent);
+            public void onClick(View v) {//when next button is clicked it puts all the details entered into fields into public static valiables
+                                        //which can be acessed by another activity outside this also we don't finish this activity as we will nedd this data while registering
+                Intent intent = new Intent(Askname.this,AskDOB.class);//creating a new intent pointing to AskEmail
+                startActivity(intent);//starting this new intent
+
             }
         });
-
 
     }
 }

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AskEmail"></activity>
+        <activity android:name=".OTP"></activity>
+        <activity android:name=".AskPhone" />
+        <activity android:name=".AskEmail" />
         <activity android:name=".AskDOB" />
         <activity android:name=".Askname" />
         <activity android:name=".SignUp" />

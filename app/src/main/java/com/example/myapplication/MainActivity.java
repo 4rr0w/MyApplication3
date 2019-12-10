@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void validate( String userName , String Password){//this function validate user with faribase databaese
+    private void validate( String userName , String Password){//this function validate user with firebase databaese
         progress.setMessage("Authenticating");
         progress.show();
        firebaseLogin.signInWithEmailAndPassword(userName,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

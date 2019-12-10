@@ -22,11 +22,12 @@ android:layout_height="match_parent">
         android:layout_marginTop="30dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
+            android:id="@+id/phone"
+            android:inputType="phone"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
-            android:hint="Email"
+            android:hint="Phone"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -53,17 +54,18 @@ android:layout_height="match_parent">
 
 </FrameLayout>
 
-<TextView
-    android:id="@+id/askphonelabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/open_sans"
-    android:text="Enter Your Email"
-    android:textSize="36sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.23000002" />
+    <TextView
+        android:id="@+id/askphonelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:text="Enter Your Phone Number to reveive OTP"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.23000002" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
