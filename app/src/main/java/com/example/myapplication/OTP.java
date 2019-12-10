@@ -50,19 +50,13 @@ public class OTP extends AppCompatActivity implements
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
-    private ViewGroup mPhoneNumberViews;
-    private ViewGroup mSignedInViews;
-
-    private TextView mStatusText;
-    private TextView mDetailText;
-
     private EditText mPhoneNumberField;
     private EditText mVerificationField;
 
     private Button mStartButton;
     private Button mVerifyButton;
-    private Button mResendButton;
-    private Button mSignOutButton;
+    private TextView mResendButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,25 +69,21 @@ public class OTP extends AppCompatActivity implements
         }
 
         // Assign views
-        mPhoneNumberViews = findViewById(R.id.phoneAuthFields);
-        mSignedInViews = findViewById(R.id.signedInButtons);
 
-        mStatusText = findViewById(R.id.status);
-        mDetailText = findViewById(R.id.detail);
 
         mPhoneNumberField = findViewById(R.id.fieldPhoneNumber);
         mVerificationField = findViewById(R.id.fieldVerificationCode);
 
-        mStartButton = findViewById(R.id.buttonStartVerification);
+        mStartButton = findViewById(R.id.buttonStart);
         mVerifyButton = findViewById(R.id.buttonVerifyPhone);
         mResendButton = findViewById(R.id.buttonResend);
-        mSignOutButton = findViewById(R.id.signOutButton);
+
 
         // Assign click listeners
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
         mResendButton.setOnClickListener(this);
-        mSignOutButton.setOnClickListener(this);
+
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -299,25 +289,25 @@ public class OTP extends AppCompatActivity implements
                 // Initialized state, show only the phone number field and start button
                 enableViews(mStartButton, mPhoneNumberField);
                 disableViews(mVerifyButton, mResendButton, mVerificationField);
-                mDetailText.setText(null);
+
                 break;
             case STATE_CODE_SENT:
                 // Code sent state, show the verification field, the
                 enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
                 disableViews(mStartButton);
-                mDetailText.setText(R.string.status_code_sent);
+
                 break;
             case STATE_VERIFY_FAILED:
                 // Verification has failed, show all options
                 enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
-                mDetailText.setText(R.string.status_verification_failed);
+
                 break;
             case STATE_VERIFY_SUCCESS:
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
-                mDetailText.setText(R.string.status_verification_succeeded);
+
 
                 // Set the verification text based on the credential
                 if (cred != null) {
@@ -331,7 +321,7 @@ public class OTP extends AppCompatActivity implements
                 break;
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
-                mDetailText.setText(R.string.status_sign_in_failed);
+
                 break;
             case STATE_SIGNIN_SUCCESS:
                 // Np-op, handled by sign-in check
@@ -340,21 +330,18 @@ public class OTP extends AppCompatActivity implements
 
         if (user == null) {
             // Signed out
-            mPhoneNumberViews.setVisibility(View.VISIBLE);
-            mSignedInViews.setVisibility(View.GONE);
 
-            mStatusText.setText(R.string.signed_out);
+
+
         } else {
             // Signed in
-            mPhoneNumberViews.setVisibility(View.GONE);
-            mSignedInViews.setVisibility(View.VISIBLE);
+
 
             enableViews(mPhoneNumberField, mVerificationField);
             mPhoneNumberField.setText(null);
             mVerificationField.setText(null);
 
-            mStatusText.setText(R.string.signed_in);
-            mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+
         }
     }
 
@@ -383,7 +370,7 @@ public class OTP extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.buttonStartVerification:
+            case R.id.buttonStart:
                 if (!validatePhoneNumber()) {
                     return;
                 }
@@ -402,9 +389,7 @@ public class OTP extends AppCompatActivity implements
             case R.id.buttonResend:
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
-            case R.id.signOutButton:
-                signOut();
-                break;
+
         }
     }
 }
