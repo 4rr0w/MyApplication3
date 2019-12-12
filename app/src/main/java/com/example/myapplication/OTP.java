@@ -163,18 +163,23 @@ public class OTP extends AppCompatActivity implements
         // [END phone_auth_callbacks]
     }
 
+
     // [START on_start_check_user]
     @Override
     public void onStart() {
         super.onStart();
+
+        mPhoneNumberField.setText("+91");
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
         // [START_EXCLUDE]
+
         if (mVerificationInProgress && validatePhoneNumber()) {
-            startPhoneNumberVerification(mPhoneNumberField.getText().toString());
-        }
+                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+            }
+
         // [END_EXCLUDE]
     }
     // [END on_start_check_user]
@@ -238,6 +243,7 @@ public class OTP extends AppCompatActivity implements
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             updateUI(STATE_SIGNIN_SUCCESS, user);
+
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI

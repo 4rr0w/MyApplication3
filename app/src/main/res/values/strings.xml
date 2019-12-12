@@ -143,4 +143,8 @@
      from https://console.developers.google.com/ -->
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
     <string name="name">Name :</string>
+
+    <string name="title_activity_logo">Logo</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
