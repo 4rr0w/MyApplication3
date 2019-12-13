@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -346,6 +347,10 @@ public class OTP extends AppCompatActivity implements
             enableViews(mPhoneNumberField, mVerificationField);
             mPhoneNumberField.setText(null);
             mVerificationField.setText(null);
+
+            Intent intent = new Intent(OTP.this,Profile.class);
+            startActivity(intent);
+            finish();
 
 
         }

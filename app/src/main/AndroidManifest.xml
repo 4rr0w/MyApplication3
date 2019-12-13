@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Profile"></activity>
         <activity android:name=".SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,8 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/launch" />
-        <activity android:name=".IntroActivity"/>
+
+        <activity android:name=".IntroActivity" />
         <activity android:name=".OTP" />
         <activity android:name=".AskEmail" />
         <activity android:name=".AskDOB" />
