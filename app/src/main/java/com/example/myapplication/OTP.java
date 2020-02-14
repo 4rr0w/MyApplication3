@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,7 +49,7 @@ public class OTP extends AppCompatActivity implements
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
-    private EditText mPhoneNumberField;
+    public static EditText mPhoneNumberField;
     private EditText mVerificationField;
 
     private Button mStartButton;
@@ -244,6 +242,8 @@ public class OTP extends AppCompatActivity implements
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             updateUI(STATE_SIGNIN_SUCCESS, user);
+                            Intent intent =  new Intent(OTP.this,SignUp.class);
+                            startActivity(intent);
 
                             // [END_EXCLUDE]
                         } else {
@@ -265,10 +265,6 @@ public class OTP extends AppCompatActivity implements
     }
     // [END sign_in_with_phone]
 
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(STATE_INITIALIZED);
-    }
 
     private void updateUI(int uiState) {
         updateUI(uiState, mAuth.getCurrentUser(), null);

@@ -10,37 +10,6 @@
     android:layout_height="match_parent"
     tools:context=".Profile">
 
-    <View
-        android:id="@+id/CoverPic"
-        android:layout_width="447dp"
-        android:layout_height="278dp"
-        android:layout_marginStart="12dp"
-        android:background="@drawable/splash"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/ChangeProfilePic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#000"
-        android:fontFamily="@font/open_sans"
-        android:text="Change Profile Picture"
-        android:textAlignment="center"
-        android:textColor="@color/browser_actions_bg_grey"
-        android:textColorHighlight="@color/browser_actions_bg_grey"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circularImageView"
-        app:layout_constraintVertical_bias="0.016" />
-
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/circularImageView"
         android:layout_width="181dp"
@@ -51,11 +20,12 @@
         app:civ_shadow="true"
         app:civ_shadow_color="#8BC34A"
         app:civ_shadow_radius="10"
-        app:layout_constraintBottom_toBottomOf="@+id/CoverPic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/CoverPic"
-        app:layout_constraintVertical_bias="0.686" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028" />
 
     <TextView
         android:id="@+id/Firstname"
@@ -71,8 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CoverPic"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.307" />
 
     <TextView
         android:id="@+id/Lastname"
@@ -89,13 +59,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/Firstname"
-        app:layout_constraintTop_toBottomOf="@+id/CoverPic"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.306" />
 
     <TextView
         android:id="@+id/PhoneNumber"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="218dp"
+        android:layout_height="43dp"
         android:gravity="center_vertical"
         android:hint="Phone Number"
 
@@ -105,10 +75,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Firstname"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.016" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -35,8 +35,14 @@ public class AskEmail extends AppCompatActivity {
                                                               //which can be acessed by another activity outside this also we don't finish this activity as we will nedd this data while registering
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AskEmail.this,OTP.class);//creating a new intent pointing to AskPhone
-                startActivity(intent);//starting this new intent
+                if (email.getText().toString().isEmpty()) {
+                    email.setError("Invalid email");
+
+                } else {
+                    email.setError(null);
+                    Intent intent = new Intent(AskEmail.this, OTP.class);//creating a new intent pointing to AskPhone
+                    startActivity(intent);//starting this new intent
+                }
             }
         });
     }
