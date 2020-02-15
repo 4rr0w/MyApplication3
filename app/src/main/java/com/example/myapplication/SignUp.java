@@ -8,11 +8,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -22,43 +17,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
+
 public class SignUp extends AppCompatActivity {
-    EditText password,password2;
+    private EditText password,password2;
     private Button signup;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference userDb,customerDb;
+    private DatabaseReference userDb;
     private FirebaseUser user;
     private String dob;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         password = findViewById(R.id.Pwd);
         password2 = findViewById(R.id.PwdRe);
+        signup = findViewById(R.id.btnSignup);
         firebaseAuth = FirebaseAuth.getInstance();
-        userDb = FirebaseDatabase.getInstance().getReference().child("Users");
+        userDb = FirebaseDatabase.getInstance().getReference("Users");
         user = firebaseAuth.getCurrentUser();
-        final DatabaseReference myDb = userDb.child(user.getUid()).child("Details");
-        dob = AskDOB.day.getText().toString() + AskDOB.month.getText().toString() + AskDOB.year.getText().toString();
+
+
+
+
+        //dob = day.getText().toString() + month.getText().toString() + year.getText().toString();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean valid = true;
                 if(password.getText().toString().equals(password2.getText().toString()))
                 {
                     if (password.getText().toString().isEmpty() || password.length() < 6|| password.length() > 10) {
                         password.setError("between 4 and 10 alphanumeric characters");
-                        valid = false;
+
                     } else {
                         password.setError(null);
+                        String first = Askname.firstName.getText().toString();
+                        String last = Askname.lastName.getText().toString();
+                        String mail = AskEmail.email.getText().toString();
+                        String id = userDb.push().getKey();
+                        Users user = new Users(id, first,last,mail);
+                        userDb.child(id).setValue(user);
 
-                        Map mapDb = new HashMap<>();
-                        mapDb.put("Email",AskEmail.email.getText().toString());
-                        mapDb.put("FirstName",Askname.firstName.getText().toString());
-                        mapDb.put("LastName",Askname.lastName.getText().toString());
-                        mapDb.put("DOB",dob);
-                        mapDb.put("PhoneNumber", OTP.mPhoneNumberField.getText().toString());
-                        myDb.updateChildren(mapDb);
+                        Intent intent = new Intent(SignUp.this, Profile.class);//creating a new intent pointing to Profile
+                        startActivity(intent);//starting this new intent
 
                     }
                 }

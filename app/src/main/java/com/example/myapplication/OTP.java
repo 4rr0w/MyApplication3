@@ -341,10 +341,9 @@ public class OTP extends AppCompatActivity implements
 
 
             enableViews(mPhoneNumberField, mVerificationField);
-            mPhoneNumberField.setText(null);
             mVerificationField.setText(null);
 
-            Intent intent = new Intent(OTP.this,Profile.class);
+            Intent intent = new Intent(OTP.this,SignUp.class);
             startActivity(intent);
             finish();
 

@@ -24,8 +24,16 @@ public class Askname extends AppCompatActivity {
             @Override
             public void onClick(View v) {//when next button is clicked it puts all the details entered into fields into public static valiables
                                         //which can be acessed by another activity outside this also we don't finish this activity as we will nedd this data while registering
-                Intent intent = new Intent(Askname.this,AskDOB.class);//creating a new intent pointing to AskEmail
-                startActivity(intent);//starting this new intent
+
+
+                if (firstName.getText().toString().isEmpty()|| lastName.getText().toString().isEmpty()) {
+                    firstName.setError("empty name fields");
+
+                } else {
+                    firstName.setError(null);
+                    Intent intent = new Intent(Askname.this, AskDOB.class);//creating a new intent pointing to AskEmail
+                    startActivity(intent);//starting this new intent
+                }
 
             }
         });

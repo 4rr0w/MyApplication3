@@ -13,8 +13,8 @@
             android:name=".cardswiper"
             android:label="@string/title_activity_cardswiper"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".Profile" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,13 +26,13 @@
             android:name="com.google.android.actions"
             android:resource="@drawable/launch" />
 
-        <activity android:name=".IntroActivity" />
         <activity android:name=".OTP" />
         <activity android:name=".AskEmail" />
         <activity android:name=".AskDOB" />
         <activity android:name=".Askname" />
         <activity android:name=".SignUp" />
         <activity android:name=".Loggedin" />
+        <activity android:name=".Profile"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
