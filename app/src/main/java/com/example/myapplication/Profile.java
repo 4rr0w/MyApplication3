@@ -1,17 +1,21 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Bundle;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -20,11 +24,13 @@ public class Profile extends AppCompatActivity {
     StorageReference mStorageRef;
     FirebaseStorage firebaseStorage;
     StorageReference ref;
+    private Button edit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        edit = findViewById(R.id.edit);
 
         final CircularImageView circularImageView = findViewById(R.id.circularImageView);
         mStorageRef = firebaseStorage.getInstance().getReference();
@@ -65,5 +71,15 @@ public class Profile extends AppCompatActivity {
         circularImageView.setShadowRadius(6f);
         circularImageView.setShadowColor(Color.RED);
         circularImageView.setShadowGravity(CircularImageView.ShadowGravity.CENTER);
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this,EditProfile.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 }

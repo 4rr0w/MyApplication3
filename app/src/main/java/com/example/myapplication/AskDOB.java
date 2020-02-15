@@ -1,11 +1,13 @@
+
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AskDOB extends AppCompatActivity {
     public static EditText day,month,year;//public static variables to acess these variables at in other activities. this makes our job easy but don't know is this secure?
@@ -30,7 +32,7 @@ public class AskDOB extends AppCompatActivity {
                 month.setText("");
                 year.setText("");
                 AskDOB.this.finish();
-                Intent intent = new Intent(AskDOB.this,Askname.class);
+                Intent intent = new Intent(AskDOB.this, Askname.class);
                 startActivity(intent);
             }
         });
@@ -42,7 +44,7 @@ public class AskDOB extends AppCompatActivity {
                 month = findViewById(R.id.month);
                 year = findViewById(R.id.year);
 
-                Intent intent = new Intent(AskDOB.this,AskEmail.class);//creating a new intent pointing to AskEmail
+                Intent intent = new Intent(AskDOB.this, AskEmail.class);//creating a new intent pointing to AskEmail
                 startActivity(intent);//starting this new intent
             }
         });
@@ -51,5 +53,3 @@ public class AskDOB extends AppCompatActivity {
 
     }
 }
-
-
