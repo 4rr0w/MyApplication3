@@ -14,7 +14,7 @@
             android:id="@+id/circularImageView"
             android:layout_width="181dp"
             android:layout_height="176dp"
-            android:src="@drawable/splash"
+            android:src="@drawable/creatoicon"
             app:civ_border_color="#EEEEEE"
             app:civ_border_width="4dp"
             app:civ_shadow="true"

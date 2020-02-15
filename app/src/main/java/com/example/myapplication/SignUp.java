@@ -48,17 +48,19 @@ public class SignUp extends AppCompatActivity {
                 if(password.getText().toString().equals(password2.getText().toString()))
                 {
                     if (password.getText().toString().isEmpty() || password.length() < 6|| password.length() > 10) {
-                        password.setError("between 4 and 10 alphanumeric characters");
+                        password.setError("between 6 and 10 alphanumeric characters");
 
-                    } else {
+                    }else{
                         password.setError(null);
                         String link = "";
+                        String phone = OTP.mPhoneNumberField.getText().toString();
                         String pass = password.getText().toString();
                         String first = Askname.firstName.getText().toString();
                         String last = Askname.lastName.getText().toString();
                         String mail = AskEmail.email.getText().toString();
                         String id = userDb.push().getKey();
-                        Users user = new Users(id, first,last,mail,pass,link);
+                        Users user = new Users(id, first,last,mail,pass,link,phone);
+                        Map mapDb = new HashMap<>();
 
                         Intent intent = new Intent(SignUp.this, Profile.class);//creating a new intent pointing to Profile
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
