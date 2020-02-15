@@ -52,14 +52,16 @@ public class SignUp extends AppCompatActivity {
 
                     } else {
                         password.setError(null);
+                        String link = "";
+                        String pass = password.getText().toString();
                         String first = Askname.firstName.getText().toString();
                         String last = Askname.lastName.getText().toString();
                         String mail = AskEmail.email.getText().toString();
                         String id = userDb.push().getKey();
-                        Users user = new Users(id, first,last,mail);
-                        userDb.child(id).setValue(user);
+                        Users user = new Users(id, first,last,mail,pass,link);
 
                         Intent intent = new Intent(SignUp.this, Profile.class);//creating a new intent pointing to Profile
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);//starting this new intent
 
                     }
