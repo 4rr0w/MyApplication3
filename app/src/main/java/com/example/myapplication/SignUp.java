@@ -47,8 +47,18 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Toast.makeText(this, "U Signed In successfully", Toast.LENGTH_LONG).show();
+            String link = "";
+            String phoneNumber = AskPhone.phone.getText().toString();
+            String pass = password.getText().toString();
+            String first = Askname.firstName.getText().toString();
+            String last = Askname.lastName.getText().toString();
+            String mail = AskEmail.email.getText().toString();
+            //String id = userDb.push().getKey();
+            Users user1 = new Users(user.getUid(), first, last, mail, link, phoneNumber, null, null);
+            userDb.child(user.getUid()).setValue(user1);
 
-            Intent intent = new Intent(SignUp.this, Profile.class);//creating a new intent pointing to Profile
+
+            Intent intent = new Intent(SignUp.this, AskPicture.class);//creating a new intent pointing to Profile
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);//starting this new intent
 
@@ -75,15 +85,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
             } else {
                 password.setError(null);
-                String link = "";
-                String phoneNumber = AskPhone.phone.getText().toString();
                 String pass = password.getText().toString();
-                String first = Askname.firstName.getText().toString();
-                String last = Askname.lastName.getText().toString();
                 String mail = AskEmail.email.getText().toString();
-                //String id = userDb.push().getKey();
-                Users user1 = new Users(user.getUid(), first, last, mail, link, phoneNumber, null, null);
-                userDb.child(user.getUid()).setValue(user1);
 
                 firebaseAuth.createUserWithEmailAndPassword(mail, pass)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -112,6 +115,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                 // ...
                             }
                         });
+
+
 
 
             }
