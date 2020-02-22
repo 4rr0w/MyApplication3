@@ -45,7 +45,8 @@ public class AskEmail extends AppCompatActivity {
 
                 } else {
                     email.setError(null);
-                    Intent intent = new Intent(AskEmail.this, OTP.class);//creating a new intent pointing to AskPhone
+                    Intent intent = new Intent(AskEmail.this, AskPhone.class);
+                    //Intent intent = new Intent(AskEmail.this, OTP.class);//creating a new intent pointing to AskPhone
                     startActivity(intent);//starting this new intent
                 }
             }

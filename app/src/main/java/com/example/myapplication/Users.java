@@ -1,26 +1,32 @@
 package com.example.myapplication;
 
+import android.net.Uri;
+
 public class Users {
-    String id;
-    String first;
-    String last;
-    String mail;
-    String pass;
-    String link;
-    String phone;
+    private String id;
+    private String first;
+    private String last;
+    private String mail;
+    private String link;
+    private String phone;
+    private String qualification;
+
+
+    private Uri profileImage;
 
     public Users() {
 
     }
 
-    public Users(String id, String firstName, String lastname, String email,String pass,String link, String phone) {
+    public Users(String id, String firstName, String lastName, String email,String link, String phone,Uri profileImage,String qualification) {
         this.id = id;
         this.first = firstName;
-        this.last = lastname;
+        this.last = lastName;
         this.mail = email;
-        this.pass = pass;
         this.link = link;
         this.phone = phone;
+        this.profileImage = profileImage;
+        this.qualification = qualification;
     }
 
     public String getid() { return first; }
@@ -29,7 +35,7 @@ public class Users {
         return first;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return last;
     }
 
@@ -37,9 +43,15 @@ public class Users {
         return mail;
     }
 
-    public String getpass() { return pass; }
+    public String getLink(){ return link;}
 
-    public String getlink(){ return link;}
+    public String getPhone(){ return phone;}
 
-    public String getphone(){ return phone;}
+    public Uri getProfileImage() {
+        return profileImage;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
 }

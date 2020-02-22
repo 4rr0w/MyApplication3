@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -66,15 +67,15 @@ public class Profile extends AppCompatActivity {
                         Users user = keyNode.getValue(Users.class);
                         users.add(user);
                         first.setText(user.getFirstName());
-                        last.setText(user.getLastname());
-                        phone.setText(user.getphone());
+                        last.setText(user.getLastName());
+                        phone.setText(user.getPhone());
 
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    Log.d( "loadPost:onCancelled", databaseError.toException().toString());
                 }
             });
 

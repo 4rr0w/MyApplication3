@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OTP2"></activity>
+        <activity android:name=".AskSkills"></activity>
+        <activity android:name=".AskPicture" />
+        <activity android:name=".AskPhone" />
+        <activity android:name=".Chat" />
+        <activity android:name=".OTP2" />
         <activity
             android:name=".cardswiper"
             android:label="@string/title_activity_cardswiper"
@@ -35,6 +39,7 @@
         <activity android:name=".SignUp" />
         <activity android:name=".Loggedin" />
         <activity android:name=".Profile" />
+        <activity android:name=".EditProfile" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
