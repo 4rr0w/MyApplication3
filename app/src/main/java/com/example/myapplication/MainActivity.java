@@ -165,20 +165,20 @@ public class MainActivity extends AppCompatActivity {
 
                             FirebaseUser user = firebaseLogin.getCurrentUser();
                             //String id = userDb.push().getKey();
-                            Users user1 = new Users(user.getUid(),user.getDisplayName(),null,user.getEmail(),null,user.getPhoneNumber(),null,null);
+                            Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,null,null,null);
                             userDb.child(user.getUid()).setValue(user1);
 
                             finish();
 
-                            userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                            userDb.child(user.getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.hasChild("qualification")) {
-                                        Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to Profile
+                                    if (dataSnapshot.getValue()==null) {
+                                        Intent intent = new Intent(MainActivity.this,AskPicture.class);//creating a new intent pointing to Profile
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);//starting this new intent
                                     } else {
-                                        Intent intent = new Intent(MainActivity.this, AskPicture.class);//creating a new intent pointing to AskPicture
+                                        Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to AskPicture
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);//starting this new intent
                                     }
@@ -223,15 +223,15 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     progress.dismiss();
                     finish();
-                    userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                    userDb.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild("qualification")) {
-                                Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to Profile
+                            if (dataSnapshot.getValue()==null) {
+                                Intent intent = new Intent(MainActivity.this, AskPicture.class);//creating a new intent pointing to Profile
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);//starting this new intent
                             } else {
-                                Intent intent = new Intent(MainActivity.this, AskPicture.class);//creating a new intent pointing to AskPicture
+                                Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to AskPicture
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);//starting this new intent
                             }

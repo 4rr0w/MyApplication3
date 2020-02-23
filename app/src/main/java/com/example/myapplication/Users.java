@@ -4,54 +4,56 @@ import android.net.Uri;
 
 public class Users {
     private String id;
-    private String first;
-    private String last;
+    private String name;
     private String mail;
-    private String link;
     private String phone;
     private String qualification;
-
-
+    private String experience;
+    private String skills;
     private Uri profileImage;
 
-    public Users() {
+    public Users() {}
 
-    }
-
-    public Users(String id, String firstName, String lastName, String email,String link, String phone,Uri profileImage,String qualification) {
+    public Users(String id, String name, String email,String phone,Uri profileImage,String qualification, String experience, String skills) {
         this.id = id;
-        this.first = firstName;
-        this.last = lastName;
+        this.name = name;
         this.mail = email;
-        this.link = link;
         this.phone = phone;
         this.profileImage = profileImage;
         this.qualification = qualification;
+        this.experience = experience;
+        this.skills = skills;
     }
 
-    public String getid() { return first; }
-
-    public String getFirstName() {
-        return first;
+    public String getId() {
+        return id;
     }
 
-    public String getLastName() {
-        return last;
+    public String getName() {
+        return name;
     }
 
-    public String getEmail() {
+    public String getMail() {
         return mail;
     }
 
-    public String getLink(){ return link;}
-
-    public String getPhone(){ return phone;}
-
-    public Uri getProfileImage() {
-        return profileImage;
+    public String getPhone() {
+        return phone;
     }
 
     public String getQualification() {
         return qualification;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public Uri getProfileImage() {
+        return profileImage;
     }
 }

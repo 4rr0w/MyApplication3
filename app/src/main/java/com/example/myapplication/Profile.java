@@ -66,8 +66,8 @@ public class Profile extends AppCompatActivity {
                         keys.add(keyNode.getKey());
                         Users user = keyNode.getValue(Users.class);
                         users.add(user);
-                        first.setText(user.getFirstName());
-                        last.setText(user.getLastName());
+                        first.setText(user.getName());
+                        last.setText("");
                         phone.setText(user.getPhone());
 
                     }

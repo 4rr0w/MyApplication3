@@ -47,14 +47,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Toast.makeText(this, "U Signed In successfully", Toast.LENGTH_LONG).show();
-            String link = "";
             String phoneNumber = AskPhone.phone.getText().toString();
-            String pass = password.getText().toString();
             String first = Askname.firstName.getText().toString();
             String last = Askname.lastName.getText().toString();
             String mail = AskEmail.email.getText().toString();
             //String id = userDb.push().getKey();
-            Users user1 = new Users(user.getUid(), first, last, mail, link, phoneNumber, null, null);
+            Users user1 = new Users(user.getUid(),first+last,mail,phoneNumber,null,null,null,null);
             userDb.child(user.getUid()).setValue(user1);
 
 
