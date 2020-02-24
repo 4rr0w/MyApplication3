@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         //and take the user to profile activity
         if (firebaseLogin.getCurrentUser() != null) {
             finish();
-            startActivity(new Intent(this, Loggedin.class));
+            startActivity(new Intent(this, Profile.class));
         }
     }
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                             FirebaseUser user = firebaseLogin.getCurrentUser();
                             //String id = userDb.push().getKey();
-                            Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,null,null,null);
+                            Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,null,null,null,null);
                             userDb.child(user.getUid()).setValue(user1);
 
                             finish();

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,11 +46,17 @@ public class AskSkills extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         userDb.child("profileImage").setValue(taskSnapshot.getStorage().getDownloadUrl().toString());
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AskSkills.this,"Could Not Upload Image",Toast.LENGTH_SHORT).show();
+                    }
                 });
                 userDb.child("experience").setValue(experience.getText().toString());
                 userDb.child("skills").setValue(skills.getText().toString());
 
                 Intent intent = new Intent(AskSkills.this,Profile.class);
+                finish();
                 startActivity(intent);
             }
         });

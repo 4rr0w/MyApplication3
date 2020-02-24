@@ -14,11 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -35,24 +38,35 @@ public class Profile extends AppCompatActivity {
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
     FirebaseStorage firebaseStorage;
-    TextView first,last,phone;
-    private List<Users> users = new ArrayList<>();
-    private Button edit;
+    TextView first,phone,dob,qualification,experience,skills;
+    private Button edit,logout;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         edit = findViewById(R.id.edit);
+        logout = findViewById(R.id.logout);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user==null) {
+            Intent intent = new Intent(Profile.this,MainActivity.class);
+            finish();
+            startActivity(intent);
+        }
 
         final CircularImageView circularImageView = findViewById(R.id.circularImageView);
         mStorageRef = firebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance();
-        mRef = mDatabase.getReference("Users");
+        mRef = mDatabase.getReference("Users").child(user.getUid());
 
         first = findViewById(R.id.Firstname);
-        last = findViewById(R.id.Lastname);
-        phone = findViewById(R.id.PhoneNumber);
+        phone = findViewById(R.id.Phone);
+        dob = findViewById(R.id.DOB);
+        qualification = findViewById(R.id.qualifiaction);
+        experience = findViewById(R.id.experience);
+        skills = findViewById(R.id.skills);
 
         try {
             final File file = File.createTempFile("test1Disha", "jpg");
@@ -60,17 +74,14 @@ public class Profile extends AppCompatActivity {
             mRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    users.clear();
-                    List<String> keys  =  new ArrayList<>();
-                    for(DataSnapshot keyNode : dataSnapshot.getChildren()) {
-                        keys.add(keyNode.getKey());
-                        Users user = keyNode.getValue(Users.class);
-                        users.add(user);
-                        first.setText(user.getName());
-                        last.setText("");
-                        phone.setText(user.getPhone());
-
-                    }
+                    Users user = dataSnapshot.getValue(Users.class);
+                    first.setText(user!=null && user.getName() != null ? user.getName() : "");
+                    if(user.getPhone()==null) {phone.setText("");} else {phone.setText(user.getPhone());}
+                    //phone.setText((user!=null && user.getPhone() != null) ? user.getPhone() : "");
+                    dob.setError(user.getDob() != null ? user.getDob() : "");
+                    qualification.setText(user.getQualification() != null ? user.getQualification() : "");
+                    experience.setText(user.getExperience() != null ? user.getExperience() : "");
+                    skills.setText(user.getSkills() != null ? user.getSkills() : "");
                 }
 
                 @Override
@@ -80,13 +91,13 @@ public class Profile extends AppCompatActivity {
             });
 
 
-            mStorageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Bitmap user = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    circularImageView.setImageBitmap(user);
-                }
-            });
+//            mStorageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                    Bitmap user = BitmapFactory.decodeFile(file.getAbsolutePath());
+//                    circularImageView.setImageBitmap(user);
+//                }
+//            });
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -118,6 +129,17 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this,EditProfile.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Profile.this,MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });

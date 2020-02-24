@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AskSkills"></activity>
+        <activity android:name=".Buffer"></activity>
+        <activity android:name=".AskSkills" />
         <activity android:name=".AskPicture" />
         <activity android:name=".AskPhone" />
         <activity android:name=".Chat" />

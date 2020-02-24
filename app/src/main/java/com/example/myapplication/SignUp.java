@@ -31,7 +31,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference userDb;
     private FirebaseUser user;
-    private String dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             String first = Askname.firstName.getText().toString();
             String last = Askname.lastName.getText().toString();
             String mail = AskEmail.email.getText().toString();
-            //String id = userDb.push().getKey();
-            Users user1 = new Users(user.getUid(),first+last,mail,phoneNumber,null,null,null,null);
+            String dob = AskDOB.day + "/" + AskDOB.month + "/" + AskDOB.year;
+            Users user1 = new Users(user.getUid(),first+last,mail,phoneNumber,dob,null,null,null,null);
             userDb.child(user.getUid()).setValue(user1);
 
 

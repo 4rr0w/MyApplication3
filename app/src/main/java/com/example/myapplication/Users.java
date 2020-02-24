@@ -7,18 +7,21 @@ public class Users {
     private String name;
     private String mail;
     private String phone;
+    private String dob;
     private String qualification;
     private String experience;
     private String skills;
     private Uri profileImage;
 
-    public Users() {}
+    public Users() {
+    }
 
-    public Users(String id, String name, String email,String phone,Uri profileImage,String qualification, String experience, String skills) {
+    public Users(String id, String name, String email, String phone, String dob,Uri profileImage, String qualification, String experience, String skills) {
         this.id = id;
         this.name = name;
         this.mail = email;
         this.phone = phone;
+        this.dob = dob;
         this.profileImage = profileImage;
         this.qualification = qualification;
         this.experience = experience;
@@ -40,6 +43,8 @@ public class Users {
     public String getPhone() {
         return phone;
     }
+
+    public String getDob() { return dob; }
 
     public String getQualification() {
         return qualification;
