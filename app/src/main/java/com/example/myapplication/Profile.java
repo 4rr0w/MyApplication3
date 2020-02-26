@@ -37,27 +37,26 @@ public class Profile extends AppCompatActivity {
     StorageReference mStorageRef;
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
-    FirebaseStorage firebaseStorage;
-    TextView first,phone,dob,qualification,experience,skills;
-    private Button edit,logout;
+    TextView first, phone, dob, qualification, experience, skills;
     FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        edit = findViewById(R.id.edit);
-        logout = findViewById(R.id.logout);
+        Button edit = findViewById(R.id.edit);
+        Button logout = findViewById(R.id.logout);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user==null) {
-            Intent intent = new Intent(Profile.this,MainActivity.class);
+        if (user == null) {
+            Intent intent = new Intent(Profile.this, MainActivity.class);
             finish();
             startActivity(intent);
         }
 
-        final CircularImageView circularImageView = findViewById(R.id.circularImageView);
-        mStorageRef = firebaseStorage.getInstance().getReference();
+        //final CircularImageView circularImageView = findViewById(R.id.circularImageView);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference("Users").child(user.getUid());
 
@@ -68,27 +67,31 @@ public class Profile extends AppCompatActivity {
         experience = findViewById(R.id.experience);
         skills = findViewById(R.id.skills);
 
-        try {
-            final File file = File.createTempFile("test1Disha", "jpg");
+        //final File file = File.createTempFile("test1Disha", "jpg");
 
-            mRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Users user = dataSnapshot.getValue(Users.class);
-                    first.setText(user!=null && user.getName() != null ? user.getName() : "");
-                    if(user.getPhone()==null) {phone.setText("");} else {phone.setText(user.getPhone());}
-                    //phone.setText((user!=null && user.getPhone() != null) ? user.getPhone() : "");
-                    dob.setError(user.getDob() != null ? user.getDob() : "");
-                    qualification.setText(user.getQualification() != null ? user.getQualification() : "");
-                    experience.setText(user.getExperience() != null ? user.getExperience() : "");
-                    skills.setText(user.getSkills() != null ? user.getSkills() : "");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users user = dataSnapshot.getValue(Users.class);
+                first.setText(user != null && user.getName() != null ? user.getName() : "");
+                assert user != null;
+                if (user.getPhone() == null) {
+                    phone.setText("");
+                } else {
+                    phone.setText(user.getPhone());
                 }
+                //phone.setText((user!=null && user.getPhone() != null) ? user.getPhone() : "");
+                dob.setText(user.getDob() != null ? user.getDob() : "");
+                qualification.setText(user.getQualification() != null ? user.getQualification() : "");
+                experience.setText(user.getExperience() != null ? user.getExperience() : "");
+                skills.setText(user.getSkills() != null ? user.getSkills() : "");
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.d( "loadPost:onCancelled", databaseError.toException().toString());
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("loadPost:onCancelled", databaseError.toException().toString());
+            }
+        });
 
 
 //            mStorageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -98,37 +101,34 @@ public class Profile extends AppCompatActivity {
 //                    circularImageView.setImageBitmap(user);
 //                }
 //            });
-        }catch (IOException e){
-            e.printStackTrace();
-        }
 
 
 // Set Color
-        circularImageView.setCircleColor(Color.WHITE);
-// or with gradient
-        circularImageView.setCircleColorStart(Color.BLACK);
-        circularImageView.setCircleColorEnd(Color.RED);
-        circularImageView.setCircleColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);
-
-// Set Border
-        circularImageView.setBorderWidth(3f);
-        circularImageView.setBorderColor(Color.BLACK);
-// or with gradient
-        circularImageView.setBorderColorStart(Color.BLACK);
-        circularImageView.setBorderColorEnd(Color.RED);
-        circularImageView.setBorderColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);
-
-// Add Shadow with default param
-        circularImageView.setShadowEnable(true);
-// or with custom param
-        circularImageView.setShadowRadius(6f);
-        circularImageView.setShadowColor(Color.RED);
-        circularImageView.setShadowGravity(CircularImageView.ShadowGravity.CENTER);
+//        circularImageView.setCircleColor(Color.WHITE);
+//// or with gradient
+//        circularImageView.setCircleColorStart(Color.BLACK);
+//        circularImageView.setCircleColorEnd(Color.RED);
+//        circularImageView.setCircleColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);
+//
+//// Set Border
+//        circularImageView.setBorderWidth(3f);
+//        circularImageView.setBorderColor(Color.BLACK);
+//// or with gradient
+//        circularImageView.setBorderColorStart(Color.BLACK);
+//        circularImageView.setBorderColorEnd(Color.RED);
+//        circularImageView.setBorderColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);
+//
+//// Add Shadow with default param
+//        circularImageView.setShadowEnable(true);
+//// or with custom param
+//        circularImageView.setShadowRadius(6f);
+//        circularImageView.setShadowColor(Color.RED);
+//        circularImageView.setShadowGravity(CircularImageView.ShadowGravity.CENTER);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile.this,EditProfile.class);
+                Intent intent = new Intent(Profile.this, EditProfile.class);
                 finish();
                 startActivity(intent);
             }
@@ -138,7 +138,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(Profile.this,MainActivity.class);
+                Intent intent = new Intent(Profile.this, MainActivity.class);
                 finish();
                 startActivity(intent);
             }
