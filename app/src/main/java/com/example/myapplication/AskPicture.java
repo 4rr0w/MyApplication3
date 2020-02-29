@@ -13,17 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.UploadTask;
-
 import java.io.IOException;
 
 public class AskPicture extends AppCompatActivity {
 
     private static final int CHOOSE_IMAGE = 101;
-    private Button cont;
     public static EditText qual;
     private ImageView profilePic;
     public static Uri uriProfileImage;
@@ -34,7 +28,7 @@ public class AskPicture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_picture);
 
-        cont = findViewById(R.id.button_continue);
+        Button cont = findViewById(R.id.button_continue);
         qual = findViewById(R.id.edit_education);
         profilePic = findViewById(R.id.imageView);
 

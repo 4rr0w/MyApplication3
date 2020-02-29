@@ -19,8 +19,8 @@ public class AskDOB extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_dob);
 
-        toMail = (Button)findViewById(R.id.Next);
-        toName = (Button)findViewById(R.id.Back);
+        toMail = findViewById(R.id.Next);
+        toName = findViewById(R.id.Back);
         day = findViewById(R.id.day);
         month = findViewById((R.id.month));
         year = findViewById(R.id.year);

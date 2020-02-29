@@ -47,6 +47,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Button edit = findViewById(R.id.edit);
         Button logout = findViewById(R.id.logout);
+        Button chat = findViewById(R.id.chat);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
@@ -129,8 +130,8 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this, EditProfile.class);
-                finish();
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -139,8 +140,17 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(Profile.this, MainActivity.class);
-                finish();
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this,Chat.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
