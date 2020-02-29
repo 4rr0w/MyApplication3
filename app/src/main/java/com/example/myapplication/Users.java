@@ -1,45 +1,64 @@
 package com.example.myapplication;
 
+import android.net.Uri;
+
 public class Users {
-    String id;
-    String first;
-    String last;
-    String mail;
-    String pass;
-    String link;
-    String phone;
+    private String id;
+    private String name;
+    private String mail;
+    private String phone;
+    private String dob;
+    private String qualification;
+    private String experience;
+    private String skills;
+    private Uri profileImage;
 
     public Users() {
-
     }
 
-    public Users(String id, String firstName, String lastname, String email,String pass,String link, String phone) {
+    public Users(String id, String name, String email, String phone, String dob,Uri profileImage, String qualification, String experience, String skills) {
         this.id = id;
-        this.first = firstName;
-        this.last = lastname;
+        this.name = name;
         this.mail = email;
-        this.pass = pass;
-        this.link = link;
         this.phone = phone;
+        this.dob = dob;
+        this.profileImage = profileImage;
+        this.qualification = qualification;
+        this.experience = experience;
+        this.skills = skills;
     }
 
-    public String getid() { return first; }
-
-    public String getFirstName() {
-        return first;
+    public String getId() {
+        return id;
     }
 
-    public String getLastname() {
-        return last;
+    public String getName() {
+        return name;
     }
 
-    public String getEmail() {
+    public String getMail() {
         return mail;
     }
 
-    public String getpass() { return pass; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public String getlink(){ return link;}
+    public String getDob() { return dob; }
 
-    public String getphone(){ return phone;}
+    public String getQualification() {
+        return qualification;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public Uri getProfileImage() {
+        return profileImage;
+    }
 }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.myapplication"
         versionCode 1
@@ -30,9 +30,14 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     implementation 'com.google.firebase:firebase-database:19.2.0'
 >>>>>>> ece6cb1701098b0d5376c09d368742cf916a4d0a
+=======
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+>>>>>>> efbb49d8e03a9f5d50eab7a59e352706a23c7af0
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.0'

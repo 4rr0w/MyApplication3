@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,8 +24,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView signup;
     private FirebaseAuth firebaseLogin;
     private ProgressDialog progress;
+    private DatabaseReference userDb;
     //a constant for detecting the login intent result
     private static final int RC_SIGN_IN = 234;
-
 
 
     //creating a GoogleSignInClient object
@@ -50,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        username = (EditText)findViewById(R.id.Userid);
-        password = (EditText)findViewById(R.id.Password);
+        username = (EditText) findViewById(R.id.Userid);
+        password = (EditText) findViewById(R.id.Password);
         error = (TextView) findViewById(R.id.iferror);
-        login = (Button)findViewById(R.id.Login);
-        signup = (TextView)findViewById(R.id.signup);
+        login = (Button) findViewById(R.id.Login);
+        signup = (TextView) findViewById(R.id.signup);
         firebaseLogin = FirebaseAuth.getInstance();
+        userDb = FirebaseDatabase.getInstance().getReference("Users");
 
 
         progress = new ProgressDialog(this);//progression bar
@@ -65,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {//when user clicks on login button
             @Override
             public void onClick(View v) {
-                    if(fields()) {
-                        validate(username.getText().toString(), password.getText().toString());
-                    }
+                if (fields()) {
+                    validate(username.getText().toString(), password.getText().toString());
+                }
 
             }
         });
@@ -75,148 +81,179 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent =  new Intent(MainActivity.this,Askname.class);
+                Intent intent = new Intent(MainActivity.this, Askname.class);
                 startActivity(intent);
 
             }
         });
 
 
-
-
-
         //google button sign after this
 
 
+        //first we intialized the FirebaseAuth object
+        firebaseLogin = FirebaseAuth.getInstance();
 
+        //Then we need a GoogleSignInOptions object
+        //And we need to build it as below
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
+        //Then we will get the GoogleSignInClient object from GoogleSignIn class
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-            //first we intialized the FirebaseAuth object
-            firebaseLogin = FirebaseAuth.getInstance();
+        //Now we will attach a click listener to the sign_in_button
+        //and inside onClick() method we are calling the signIn() method that will open
+        //google sign in intent
+        findViewById(R.id.google_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+    }
 
-            //Then we need a GoogleSignInOptions object
-            //And we need to build it as below
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-            //Then we will get the GoogleSignInClient object from GoogleSignIn class
-            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-            //Now we will attach a click listener to the sign_in_button
-            //and inside onClick() method we are calling the signIn() method that will open
-            //google sign in intent
-            findViewById(R.id.google_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    signIn();
-                }
-            });
+        //if the user is already signed in
+        //we will close this activity
+        //and take the user to profile activity
+        if (firebaseLogin.getCurrentUser() != null) {
+            finish();
+            startActivity(new Intent(this, Profile.class));
         }
+    }
 
-        @Override
-        protected void onStart() {
-            super.onStart();
 
-            //if the user is already signed in
-            //we will close this activity
-            //and take the user to profile activity
-            if (firebaseLogin.getCurrentUser() != null) {
-                finish();
-                startActivity(new Intent(this, Loggedin.class));
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //if the requestCode is the Google Sign In code that we defined at starting
+        if (requestCode == RC_SIGN_IN) {
+
+            //Getting the GoogleSignIn Task
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                //Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+
+                //authenticating with firebase
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
 
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
+        //getting the auth credential
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 
-            //if the requestCode is the Google Sign In code that we defined at starting
-            if (requestCode == RC_SIGN_IN) {
+        //Now using firebase we are signing in the user here
+        firebaseLogin.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-                //Getting the GoogleSignIn Task
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                try {
-                    //Google Sign In was successful, authenticate with Firebase
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-
-                    //authenticating with firebase
-                    firebaseAuthWithGoogle(account);
-                } catch (ApiException e) {
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-        private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+                            FirebaseUser user = firebaseLogin.getCurrentUser();
+                            //String id = userDb.push().getKey();
 
 
-            //getting the auth credential
-            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                            finish();
 
-            //Now using firebase we are signing in the user here
-            firebaseLogin.signInWithCredential(credential)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            userDb.child(user.getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue()==null) {
+                                        FirebaseUser user = firebaseLogin.getCurrentUser();
+                                        assert user != null;
+                                        Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,null,null,null,null);
+                                        userDb.child(user.getUid()).setValue(user1);
+                                        Intent intent = new Intent(MainActivity.this,AskPicture.class);//creating a new intent pointing to Profile
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);//starting this new intent
+                                    } else {
+                                        Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to AskPicture
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);//starting this new intent
+                                    }
+                                }
 
-                                FirebaseUser user = firebaseLogin.getCurrentUser();
-                                finish();
-                                startActivity(new Intent(MainActivity.this, Loggedin.class));
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                                }
+                            });
 
+                        } else {
+                            // If sign in fails, display a message to the user.
 
-                            } else {
-                                // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(MainActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            // ...
                         }
-                    });
-        }
+
+                        // ...
+                    }
+                });
+    }
 
 
-        //this method is called on click
-        private void signIn() {
-            //getting the google signin intent
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+    //this method is called on click
+    private void signIn() {
+        //getting the google signin intent
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 
-            //starting the activity for result
-            startActivityForResult(signInIntent, RC_SIGN_IN);
-        }
-
-
+        //starting the activity for result
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
 
-
-
-    private void validate( String userName , String Password){//this function validate user with firebase databaese
+    private void validate(String userName, String Password) {//this function validate user with Firebase database
         progress.setMessage("Authenticating");
         progress.show();
-       firebaseLogin.signInWithEmailAndPassword(userName,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-           @Override
-           public void onComplete(@NonNull Task<AuthResult> task) {
-               if(task.isSuccessful()){
-                   progress.dismiss();
-                   finish();
-                   startActivity(new Intent(MainActivity.this,Loggedin.class));
-               }
-               else{
-                   progress.dismiss();
-                   error.setText("Wrong Username or Password!");
-                   Toast.makeText(MainActivity.this, "Login Failed!!", Toast.LENGTH_SHORT).show();
+        firebaseLogin.signInWithEmailAndPassword(userName, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    progress.dismiss();
+                    finish();
+                    userDb.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue()==null) {
+                                Intent intent = new Intent(MainActivity.this, AskPicture.class);//creating a new intent pointing to Profile
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);//starting this new intent
+                            } else {
+                                Intent intent = new Intent(MainActivity.this, Profile.class);//creating a new intent pointing to AskPicture
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);//starting this new intent
+                            }
+                        }
 
-               }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-           }
-       });
+                        }
+                    });
+                } else {
+                    progress.dismiss();
+                    error.setText("Wrong Username or Password!");
+                    Toast.makeText(MainActivity.this, "Login Failed!!", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
     }
 
     public boolean fields() {
@@ -229,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (password.getText().toString().isEmpty() || password.length() < 6|| password.length() > 10) {
+        if (password.getText().toString().isEmpty() || password.length() < 6 || password.length() > 10) {
             password.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {

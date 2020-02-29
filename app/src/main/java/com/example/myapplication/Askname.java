@@ -13,7 +13,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Askname extends AppCompatActivity {
-    public static EditText firstName,lastName;//public static variables to acess these variables at in other activities. this makes our job easy but don't know is this secure?
+    public static EditText firstName,lastName;//public static variables to access these variables at in other activities. this makes our job easy but don't know is this secure?
     private Button toDOB;
 
     @Override
