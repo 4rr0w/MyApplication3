@@ -4,93 +4,76 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.text.method.LinkMovementMethod;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
 
 
 public class SignUp extends AppCompatActivity {
-    private EditText user,email,password;
+    private EditText password,password2;
     private Button signup;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference userDb;
+    private FirebaseUser user;
+    private String dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        SetupUIviews();
+        password = findViewById(R.id.Pwd);
+        password2 = findViewById(R.id.PwdRe);
+        signup = findViewById(R.id.btnSignup);
         firebaseAuth = FirebaseAuth.getInstance();
+        userDb = FirebaseDatabase.getInstance().getReference("Users");
+        user = firebaseAuth.getCurrentUser();
 
+
+
+
+        //dob = day.getText().toString() + month.getText().toString() + year.getText().toString();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()){
-                    //upload to database
-                    String emailUp = email.getText().toString().trim();
-                    String pwdUp = password.getText().toString().trim();
+                if(password.getText().toString().equals(password2.getText().toString()))
+                {
+                    if (password.getText().toString().isEmpty() || password.length() < 6|| password.length() > 10) {
+                        password.setError("between 6 and 10 alphanumeric characters");
 
-                    firebaseAuth.createUserWithEmailAndPassword(emailUp,pwdUp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                email.setText("");
-                                password.setText("");
-                                user.setText("");
-                                Toast.makeText(SignUp.this, "Registration Successful!!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                                finish();
-                                startActivity(intent);
-                            }
-                            else{
-                                email.setText("");
-                                password.setText("");
-                                user.setText("");
-                                Toast.makeText(SignUp.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    }else{
+                        password.setError(null);
+                        String link = "";
+                        String phone = OTP.mPhoneNumberField.getText().toString();
+                        String pass = password.getText().toString();
+                        String first = Askname.firstName.getText().toString();
+                        String last = Askname.lastName.getText().toString();
+                        String mail = AskEmail.email.getText().toString();
+                        String id = userDb.push().getKey();
+                        Users user = new Users(id, first,last,mail,pass,link,phone);
+                        Map mapDb = new HashMap<>();
+
+                        Intent intent = new Intent(SignUp.this, Profile.class);//creating a new intent pointing to Profile
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);//starting this new intent
+
+                    }
+                }
+                else{
+                    password.setError("Passwords do not match.");
+                    password2.setError("Passwords do not match.");
                 }
             }
         });
 
-        TextView login = (TextView)findViewById(R.id.lnkLogin);
-        login.setMovementMethod(LinkMovementMethod.getInstance());
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                finish();
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void SetupUIviews(){
-        user = (EditText)findViewById(R.id.txtName);
-        email = (EditText)findViewById(R.id.txtEmail);
-        password = (EditText)findViewById(R.id.txtPwd);
-        signup = (Button)findViewById(R.id.btnSignup);
-
-    }
-
-    private Boolean validate(){
-        Boolean valid = false;
-
-        String username = user.getText().toString();
-        String useremail = email.getText().toString();
-        String Pass = password.getText().toString();
-
-        if(username.isEmpty() || useremail.isEmpty() || Pass.isEmpty() )
-            Toast.makeText(this,"Please Enter all the details correctly",Toast.LENGTH_SHORT).show();
-        else valid = true;
-
-        return valid;
     }
 }

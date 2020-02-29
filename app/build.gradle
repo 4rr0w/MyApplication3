@@ -29,6 +29,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+<<<<<<< HEAD
+=======
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+>>>>>>> ece6cb1701098b0d5376c09d368742cf916a4d0a
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
