@@ -27,6 +27,9 @@
 <!--            app:layout_constraintTop_toTopOf="parent"-->
 <!--            app:layout_constraintVertical_bias="0.028" />-->
 
+
+
+
         <EditText
             android:id="@+id/Firstname"
             android:layout_width="198dp"
@@ -37,35 +40,34 @@
             android:maxHeight="46dp"
             android:maxLength="20"
             android:padding="5dp"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.306" />
+            app:layout_constraintVertical_bias="0.213" />
 
         <EditText
             android:id="@+id/Phone"
-            android:layout_width="181dp"
+            android:layout_width="198dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="204dp"
             android:gravity="center_vertical"
 
             android:hint="Phone Number"
             android:maxHeight="46dp"
             android:maxLength="20"
             android:padding="5dp"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Firstname"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.306" />
+            app:layout_constraintVertical_bias="0.293" />
 
         <EditText
             android:id="@+id/DOB"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
@@ -75,38 +77,46 @@
             android:maxHeight="46dp"
             android:maxLength="20"
             android:padding="5dp"
-            android:textSize="20sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.082"
+            app:layout_constraintHorizontal_bias="0.003"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Firstname"
-            app:layout_constraintVertical_bias="0.022" />
+            app:layout_constraintVertical_bias="0.13" />
 
         <EditText
             android:id="@+id/qualifiaction"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:maxHeight="46dp"
+            android:maxLength="20"
+            android:padding="5dp"
+
             android:hint="Qualification"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/DOB" />
 
         <EditText
             android:id="@+id/experience"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="Experience"
-            android:textSize="24sp"
+            android:maxHeight="46dp"
+            android:maxLength="20"
+            android:padding="5dp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintHorizontal_bias="0.003"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/qualifiaction" />
 
@@ -114,13 +124,13 @@
             android:id="@+id/skills"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="Skills"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/experience" />
 
@@ -129,14 +139,11 @@
             android:layout_width="124dp"
             android:layout_height="56dp"
             android:layout_marginTop="36dp"
-            android:hint="Done"
-            android:textColor="@android:color/white"
-            app:iconTint="#F0FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/skills"
-            tools:text="DONE" />
+            tools:text="EDIT" />
 
         <Button
             android:id="@+id/logout"
@@ -147,6 +154,31 @@
             android:text="@string/com_facebook_loginview_log_out_action"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/card_swiper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CARDSWIPER"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.207"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.859" />
+
+        <Button
+            android:id="@+id/chat"
+            android:layout_width="131dp"
+            android:layout_height="47dp"
+            android:text="CHAT"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.826"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.859" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

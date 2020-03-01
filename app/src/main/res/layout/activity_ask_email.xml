@@ -26,6 +26,7 @@ android:layout_height="match_parent">
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
+            android:singleLine="true"
             android:hint="Email"
             android:maxLength="50" />
 
