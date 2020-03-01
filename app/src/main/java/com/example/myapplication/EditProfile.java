@@ -26,7 +26,7 @@ public class EditProfile extends AppCompatActivity {
     StorageReference mStorageRef;
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
-    TextView first, phone, dob, qualification, experience, skills;
+    TextView first, phone, dob, qualification, experience, skills, gender;
     FirebaseUser user;
 
     @Override
@@ -53,6 +53,7 @@ public class EditProfile extends AppCompatActivity {
         qualification = findViewById(R.id.qualifiaction);
         experience = findViewById(R.id.experience);
         skills = findViewById(R.id.skills);
+        gender = findViewById(R.id.gender);
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,6 +71,7 @@ public class EditProfile extends AppCompatActivity {
                 qualification.setText(user.getQualification() != null ? user.getQualification() : "");
                 experience.setText(user.getExperience() != null ? user.getExperience() : "");
                 skills.setText(user.getSkills() != null ? user.getSkills() : "");
+                gender.setText(user.getGender());
             }
 
             @Override
@@ -81,7 +83,7 @@ public class EditProfile extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), null, qualification.getText().toString(), experience.getText().toString(), skills.getText().toString());
+                Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), "default", qualification.getText().toString(), experience.getText().toString(), skills.getText().toString(),gender.getText().toString());
                 mRef.setValue(user1);
                 Intent intent = new Intent(EditProfile.this, Profile.class);
                 startActivity(intent);

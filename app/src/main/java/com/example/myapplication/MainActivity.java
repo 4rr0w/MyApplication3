@@ -167,13 +167,13 @@ public class MainActivity extends AppCompatActivity {
                             finish();
 
                             assert user != null;
-                            userDb.child(user.getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
+                            userDb.child(user.getUid()).child("gender").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue()==null) {
                                         FirebaseUser user = firebaseLogin.getCurrentUser();
                                         assert user != null;
-                                        Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,null,null,null,null);
+                                        Users user1 = new Users(user.getUid(),user.getDisplayName(),user.getEmail(),user.getPhoneNumber(),null,"default",null,null,null,null);
                                         userDb.child(user.getUid()).setValue(user1);
                                         Intent intent = new Intent(MainActivity.this,AskPicture.class);//creating a new intent pointing to Profile
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     progress.dismiss();
                     finish();
-                    userDb.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
+                    userDb.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("gender").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue()==null) {
