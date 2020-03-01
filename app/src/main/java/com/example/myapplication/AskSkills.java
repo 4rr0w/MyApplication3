@@ -22,7 +22,6 @@ import com.google.firebase.storage.UploadTask;
 public class AskSkills extends AppCompatActivity {
     private EditText experience;
     private EditText skills;
-    private Button finish;
     private DatabaseReference userDb;
     private FirebaseUser user;
 
@@ -33,7 +32,7 @@ public class AskSkills extends AppCompatActivity {
 
         experience = findViewById(R.id.text_exp);
         skills = findViewById(R.id.text_skills);
-        finish = findViewById(R.id.button_finish);
+        Button finish = findViewById(R.id.button_finish);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userDb = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
 
@@ -56,8 +55,8 @@ public class AskSkills extends AppCompatActivity {
                 userDb.child("skills").setValue(skills.getText().toString());
 
                 Intent intent = new Intent(AskSkills.this,Profile.class);
-                finish();
                 startActivity(intent);
+                finish();
             }
         });
     }

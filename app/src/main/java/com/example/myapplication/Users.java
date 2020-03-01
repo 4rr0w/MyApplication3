@@ -16,7 +16,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(String id, String name, String email, String phone, String dob,Uri profileImage, String qualification, String experience, String skills) {
+    Users(String id, String name, String email, String phone, String dob, Uri profileImage, String qualification, String experience, String skills) {
         this.id = id;
         this.name = name;
         this.mail = email;

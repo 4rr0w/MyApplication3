@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private TextView error;
-    private Button login;
-    private TextView signup;
     private FirebaseAuth firebaseLogin;
     private ProgressDialog progress;
     private DatabaseReference userDb;
@@ -55,17 +55,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        username = (EditText) findViewById(R.id.Userid);
-        password = (EditText) findViewById(R.id.Password);
-        error = (TextView) findViewById(R.id.iferror);
-        login = (Button) findViewById(R.id.Login);
-        signup = (TextView) findViewById(R.id.signup);
+        username = findViewById(R.id.Userid);
+        password = findViewById(R.id.Password);
+        error = findViewById(R.id.iferror);
+        Button login = findViewById(R.id.Login);
+        TextView signup = findViewById(R.id.signup);
         firebaseLogin = FirebaseAuth.getInstance();
         userDb = FirebaseDatabase.getInstance().getReference("Users");
 
 
         progress = new ProgressDialog(this);//progression bar
-        FirebaseUser user = firebaseLogin.getCurrentUser();//checks if user is already logged in
 
 
         login.setOnClickListener(new View.OnClickListener() {//when user clicks on login button
@@ -143,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
                 //authenticating with firebase
+                assert account != null;
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -164,11 +164,9 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             FirebaseUser user = firebaseLogin.getCurrentUser();
-                            //String id = userDb.push().getKey();
-
-
                             finish();
 
+                            assert user != null;
                             userDb.child(user.getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -195,13 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
-
-                        // ...
                     }
                 });
     }
@@ -226,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     progress.dismiss();
                     finish();
-                    userDb.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
+                    userDb.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("qualification").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue()==null) {

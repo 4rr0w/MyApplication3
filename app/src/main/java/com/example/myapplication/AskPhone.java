@@ -11,7 +11,6 @@ import android.widget.EditText;
 public class AskPhone extends AppCompatActivity implements View.OnClickListener {
 
      public static EditText phone;
-    Button cont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +18,15 @@ public class AskPhone extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_ask_phone);
 
         phone = findViewById(R.id.editText);
-        cont = findViewById(R.id.button_continue);
+        Button cont = findViewById(R.id.button_continue);
 
         cont.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_continue:
-                startActivity(new Intent(AskPhone.this, SignUp.class));
+        if (v.getId() == R.id.button_continue) {
+            startActivity(new Intent(AskPhone.this, SignUp.class));
         }
     }
 }
