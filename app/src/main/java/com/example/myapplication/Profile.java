@@ -48,13 +48,12 @@ public class Profile extends AppCompatActivity {
         Button edit = findViewById(R.id.edit);
         Button logout = findViewById(R.id.logout);
         Button chat = findViewById(R.id.chat);
-        Button cardswiper = findViewById(R.id.card_swiper);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
             Intent intent = new Intent(Profile.this, MainActivity.class);
-            startActivity(intent);
             finish();
+            startActivity(intent);
         }
 
         //final CircularImageView circularImageView = findViewById(R.id.circularImageView);
@@ -150,15 +149,6 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this,Chat.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        cardswiper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this,cardswiper.class);
                 startActivity(intent);
                 finish();
             }

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class AskPicture extends AppCompatActivity {
 
     private static final int CHOOSE_IMAGE = 101;
-    public static EditText qual,gender;
+    public static EditText qual;
     private ImageView profilePic;
     public static Uri uriProfileImage;
 
@@ -30,7 +30,6 @@ public class AskPicture extends AppCompatActivity {
 
         Button cont = findViewById(R.id.button_continue);
         qual = findViewById(R.id.edit_education);
-        gender = findViewById(R.id.gender);
         profilePic = findViewById(R.id.imageView);
 
         profilePic.setOnClickListener(new View.OnClickListener() {

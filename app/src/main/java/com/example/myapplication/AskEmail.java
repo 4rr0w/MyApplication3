@@ -12,6 +12,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AskEmail extends AppCompatActivity {
     public static EditText email;//public static variables to acess these variables at in other activities. this makes our job easy but don't know is this secure?
 
@@ -38,9 +41,17 @@ public class AskEmail extends AppCompatActivity {
                                                               //which can be acessed by another activity outside this also we don't finish this activity as we will nedd this data while registering
             @Override
             public void onClick(View v) {
-                if (email.getText().toString().isEmpty()) {
-                    email.setError("Invalid email");
+                String valid = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                String match =email.getText().toString().trim();
 
+
+                if ( !Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(match).matches() ) {
+                    email.setError("Invalid email");
                 } else {
                     email.setError(null);
                     Intent intent = new Intent(AskEmail.this, AskPhone.class);

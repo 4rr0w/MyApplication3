@@ -11,13 +11,12 @@ public class Users {
     private String qualification;
     private String experience;
     private String skills;
-    private String profileImage;
-    private String gender;
+    private Uri profileImage;
 
     public Users() {
     }
 
-    Users(String id, String name, String email, String phone, String dob, String profileImage, String qualification, String experience, String skills, String gender) {
+    Users(String id, String name, String email, String phone, String dob, Uri profileImage, String qualification, String experience, String skills) {
         this.id = id;
         this.name = name;
         this.mail = email;
@@ -27,7 +26,6 @@ public class Users {
         this.qualification = qualification;
         this.experience = experience;
         this.skills = skills;
-        this.gender = gender;
     }
 
     public String getId() {
@@ -46,9 +44,7 @@ public class Users {
         return phone;
     }
 
-    public String getDob() {
-        return dob;
-    }
+    public String getDob() { return dob; }
 
     public String getQualification() {
         return qualification;
@@ -62,11 +58,7 @@ public class Users {
         return skills;
     }
 
-    public String getProfileImage() {
+    public Uri getProfileImage() {
         return profileImage;
-    }
-
-    public String getGender() {
-        return gender;
     }
 }

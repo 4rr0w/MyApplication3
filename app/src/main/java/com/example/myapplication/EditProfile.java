@@ -26,7 +26,7 @@ public class EditProfile extends AppCompatActivity {
     StorageReference mStorageRef;
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
-    TextView first, phone, dob, qualification, experience, skills, gender;
+    TextView first, phone, dob, qualification, experience, skills;
     FirebaseUser user;
 
     @Override
@@ -53,44 +53,48 @@ public class EditProfile extends AppCompatActivity {
         qualification = findViewById(R.id.qualifiaction);
         experience = findViewById(R.id.experience);
         skills = findViewById(R.id.skills);
-        gender = findViewById(R.id.gender);
-
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users user = dataSnapshot.getValue(Users.class);
-                first.setText(user != null && user.getName() != null ? user.getName() : "");
-                assert user != null;
-                if (user.getPhone() == null) {
-                    phone.setText("");
-                } else {
-                    phone.setText(user.getPhone());
+        if (phone.length() == 10) {
+            phone.setError("");
+            mRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Users user = dataSnapshot.getValue(Users.class);
+                    first.setText(user != null && user.getName() != null ? user.getName() : "");
+                    assert user != null;
+                    if (user.getPhone() == null) {
+                        phone.setText("");
+                    } else {
+                        phone.setText(user.getPhone());
+                    }
+                    //phone.setText((user!=null && user.getPhone() != null) ? user.getPhone() : "");
+                    dob.setText(user.getDob() != null ? user.getDob() : "");
+                    qualification.setText(user.getQualification() != null ? user.getQualification() : "");
+                    experience.setText(user.getExperience() != null ? user.getExperience() : "");
+                    skills.setText(user.getSkills() != null ? user.getSkills() : "");
                 }
-                //phone.setText((user!=null && user.getPhone() != null) ? user.getPhone() : "");
-                dob.setText(user.getDob() != null ? user.getDob() : "");
-                qualification.setText(user.getQualification() != null ? user.getQualification() : "");
-                experience.setText(user.getExperience() != null ? user.getExperience() : "");
-                skills.setText(user.getSkills() != null ? user.getSkills() : "");
-                gender.setText(user.getGender());
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("loadPost:onCancelled", databaseError.toException().toString());
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.d("loadPost:onCancelled", databaseError.toException().toString());
+                }
+            });
 
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), "default", qualification.getText().toString(), experience.getText().toString(), skills.getText().toString(),gender.getText().toString());
-                mRef.setValue(user1);
-                Intent intent = new Intent(EditProfile.this, Profile.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), null, qualification.getText().toString(), experience.getText().toString(), skills.getText().toString());
+                    mRef.setValue(user1);
+                    Intent intent = new Intent(EditProfile.this, Profile.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }else{
+            phone.setError("Invalid Phone Number");
+        }
+
     }
+
 
 
 }
