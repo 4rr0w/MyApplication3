@@ -38,7 +38,7 @@ public class arrayAdapter extends ArrayAdapter<cards> {
                 break;
 
             default:
-                Glide.clear(image);
+                //Glide.clear(image);
                 Glide.with(convertView.getContext()).load(cards_item.getProfileImageUrl()).into(image);
                 break;
         }

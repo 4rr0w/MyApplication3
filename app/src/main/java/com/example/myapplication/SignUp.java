@@ -46,7 +46,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             String last = Askname.lastName.getText().toString();
             String mail = AskEmail.email.getText().toString();
             String dob = AskDOB.day + "/" + AskDOB.month + "/" + AskDOB.year;
-            Users user1 = new Users(user.getUid(),first+" "+last,mail,phoneNumber,dob,"default",null,null,null,null);
+            Users user1 = new Users(user.getUid(),first+" "+last,mail,phoneNumber,dob,"default",null,null,null);
             userDb.child(user.getUid()).setValue(user1);
 
 

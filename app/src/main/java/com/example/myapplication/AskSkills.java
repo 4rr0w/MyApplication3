@@ -57,9 +57,9 @@ public class AskSkills extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String[] tags = skills.getText().toString().split(" ");
-                LinkedHashSet<String> hashSet = new LinkedHashSet<>(tags);
+                //LinkedHashSet<String> hashSet = new LinkedHashSet<>(tags);
 
-                ArrayList<String> listWithoutDuplicates = new ArrayList<>(hashSet);
+                //ArrayList<String> listWithoutDuplicates = new ArrayList<>(hashSet);
 
                 LayoutInflater inflater = LayoutInflater.from(AskSkills.this);
                 for(String text : tags)

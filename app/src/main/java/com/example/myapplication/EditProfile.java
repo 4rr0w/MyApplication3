@@ -79,19 +79,20 @@ public class EditProfile extends AppCompatActivity {
                 }
             });
 
-            done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), null, qualification.getText().toString(), experience.getText().toString(), skills.getText().toString());
-                    mRef.setValue(user1);
-                    Intent intent = new Intent(EditProfile.this, Profile.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
         }else{
             phone.setError("Invalid Phone Number");
         }
+
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Users user1 = new Users(user.getUid(), first.getText().toString(), user.getEmail(), phone.getText().toString(), dob.getText().toString(), null, qualification.getText().toString(), experience.getText().toString(), skills.getText().toString());
+                mRef.setValue(user1);
+                Intent intent = new Intent(EditProfile.this, Profile.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

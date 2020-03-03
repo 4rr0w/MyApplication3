@@ -11,12 +11,12 @@ public class Users {
     private String qualification;
     private String experience;
     private String skills;
-    private Uri profileImage;
+    private String profileImage;
 
     public Users() {
     }
 
-    Users(String id, String name, String email, String phone, String dob, Uri profileImage, String qualification, String experience, String skills) {
+    Users(String id, String name, String email, String phone, String dob, String profileImage, String qualification, String experience, String skills) {
         this.id = id;
         this.name = name;
         this.mail = email;
@@ -58,7 +58,7 @@ public class Users {
         return skills;
     }
 
-    public Uri getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 }
